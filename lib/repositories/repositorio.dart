@@ -12,8 +12,11 @@ class Repositorio {
 
   static Future<Map<String, dynamic>> buscarTrending() async {
     _inicializarDotEnv();
+    print(apiKey);
     final response = await http.get(Uri.parse(
         "https://api.giphy.com/v1/gifs/trending?api_key=$apiKey&limit=20&offset=0&rating=g&bundle=messaging_non_clips"));
+    // print("dentro do metodo do trending");
+    print(response.body);
     return jsonDecode(response.body);
   }
 

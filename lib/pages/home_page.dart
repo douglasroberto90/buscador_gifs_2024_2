@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:buscador_gifs_2024_2/repositories/repositorio.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +9,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Future<Map<String, dynamic>> gifs;
+
+  @override
+  void initState(){
+    super.initState();
+    print("passei no initstate");
+    gifs = Repositorio.buscarTrending();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +32,52 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(label: Text("Digite sua pesquisa")),
+              onSubmitted: (texto) {
+                setState(() {
+                  gifs = Repositorio.buscarGifs(texto);
+                });
+              },
             ),
           ),
-        //Vou colocar um future builder aqui
+          Expanded(
+            child: FutureBuilder(
+              future: gifs,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
+                    return Text(
+                      "Aguarde",
+                      style: TextStyle(fontSize: 20),
+                    );
+                  default:
+                    if (snapshot.hasError) {
+                      print(snapshot.data);
+                      return Text(
+                        "Deu ruim",
+                        style: TextStyle(fontSize: 20),
+                      );
+                    } else {
+                      return _criarGridDosGifs(context, snapshot);//modificar pelo nosso metodo
+                    }
+                }
+              },
+            ),
+          )
         ],
       ),
+    );
+  }
+
+  Widget _criarGridDosGifs(BuildContext context,AsyncSnapshot snapshot){
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+        itemCount: 10,
+    itemBuilder: (context, index) {
+      return Image.network(snapshot.data["data"][index]["images"]
+      ["fixed_height"]["url"]);
+    },
     );
   }
 }
