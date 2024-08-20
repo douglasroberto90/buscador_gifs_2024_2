@@ -14,7 +14,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
-    print("passei no initstate");
     gifs = Repositorio.buscarTrending();
   }
 
@@ -52,7 +51,6 @@ class _HomePageState extends State<HomePage> {
                     );
                   default:
                     if (snapshot.hasError) {
-                      print(snapshot.data);
                       return Text(
                         "Deu ruim",
                         style: TextStyle(fontSize: 20),
