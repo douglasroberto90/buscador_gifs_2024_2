@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:share/share.dart';
 
 class DetailsPage extends StatelessWidget {
   DetailsPage(this.gif, {super.key});
@@ -17,16 +17,21 @@ class DetailsPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.black,
         actions: [IconButton(onPressed: () {
-          Share.share("oi");
+          Share.share(gif["images"]["original"]["url"]);
         },
             icon: Icon(Icons.share))],
       ),
-      body: Container(
-        width: double.maxFinite,
-        child: Image.network(
-          gif["images"]["original"]["url"],
-          fit: BoxFit.fitWidth,
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: Image.network(
+              gif["images"]["original"]["url"],
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+        ],
       ),
     );
   }
