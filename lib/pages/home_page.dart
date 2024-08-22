@@ -1,3 +1,4 @@
+import 'package:buscador_gifs_2024_2/pages/details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:buscador_gifs_2024_2/repositories/repositorio.dart';
 
@@ -12,9 +13,9 @@ class _HomePageState extends State<HomePage> {
   late Future<Map<String, dynamic>> gifs;
 
   @override
-  void initState(){
-    super.initState();
+  void initState() {
     gifs = Repositorio.buscarTrending();
+    super.initState();
   }
 
   @override
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(fontSize: 20),
                       );
                     } else {
-                      return _criarGridDosGifs(context, snapshot);//modificar pelo nosso metodo
+                      return _criarGridDosGifs(context, snapshot);
                     }
                 }
               },
@@ -67,15 +68,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _criarGridDosGifs(BuildContext context,AsyncSnapshot snapshot){
+  Widget _criarGridDosGifs(BuildContext context, AsyncSnapshot snapshot) {
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-        itemCount: 10,
-    itemBuilder: (context, index) {
-      return Image.network(snapshot.data["data"][index]["images"]
-      ["fixed_height"]["url"]);
-    },
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          child: Image.network(
+              snapshot.data["data"][index]["images"]["fixed_height"]["url"]),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DetailsPage(snapshot.data["data"][index]);
+            }));
+          },
+        );
+      },
     );
   }
 }
