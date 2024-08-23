@@ -21,17 +21,20 @@ class DetailsPage extends StatelessWidget {
         },
             icon: Icon(Icons.share))],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: double.maxFinite,
-            child: Image.network(
-              gif["images"]["original"]["url"],
-              fit: BoxFit.fitWidth,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              alignment:Alignment.center,
+              width: double.maxFinite,
+              child: Image.network(
+                gif["images"]["original"]["url"],
+                fit: BoxFit.fitWidth,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

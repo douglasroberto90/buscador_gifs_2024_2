@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(label: Text("Digite sua pesquisa")),
-              onSubmitted: (texto) {
+              onSubmitted: (String textoBusca) {
                 setState(() {
-                  gifs = Repositorio.buscarGifs(texto);
+                  gifs = Repositorio.buscarGifs(textoBusca);
                 });
               },
             ),
