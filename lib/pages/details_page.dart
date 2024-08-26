@@ -12,14 +12,16 @@ class DetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           gif["title"],
-          style: TextStyle(color: Colors.white),
+          //style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
         actions: [IconButton(onPressed: () {
           Share.share(gif["images"]["original"]["url"]);
         },
-            icon: Icon(Icons.share))],
+            icon: Icon(Icons.share),
+          color: Colors.white,
+        )],
       ),
       body: SingleChildScrollView(
         child: Column(
